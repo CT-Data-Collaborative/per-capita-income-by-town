@@ -1,0 +1,218 @@
+{
+  "name": "per-capita-income-by-town",
+  "datapackage_version": "1.0-beta.18",
+  "title": "Per Capita Income by Town",
+  "description": "Per Capita Income by Town reports the 5-year estimated mean income for every individual, disaggregated by Race or Ethnicity.",
+  "version": "1.0",
+  "licenses": [{
+    "url": "http://opendatacommons.org/licenses/pddl/",
+    "name": "Open Data Commons Public Domain",
+    "version": "1.0",
+    "id": "odc-pddl"
+  }],
+  "sources": [{
+    "name": "uscensus",
+    "web": ""
+  }],
+  "author":[{
+    "name": "Jenna Daly",
+    "email": "jdaly@ctdata.org",
+    "web": "http://ctdata.org"
+  }],
+  "contributor": [],
+  "resources": [{
+    "path": "data/per_capita_income_town_2016.csv",
+    "format": "csv",
+    "schema": {
+      "fields": [{
+          "name": "Town",
+          "type": "string",
+          "dimension": false
+        }, {
+          "name": "FIPS",
+          "type": "string",
+          "dimension": false
+        }, {
+          "name": "Year",
+          "type": "string",
+          "dimension": false
+        }, {
+          "name": "Race/Ethnicity",
+          "type": "string",
+          "dimension": true,
+          "constraints": {
+            "enum": ["All",
+                     "American Indian and Alaska Native Alone",   
+                     "Asian Alone",                                
+                     "Black or African American Alone",           
+                     "Hispanic or Latino",                         
+                     "Native Hawaiian and Other Pacific Islander",
+                     "Some Other Race Alone",                      
+                     "Two or More Races",                        
+                     "White Alone",                                
+                     "White Alone Not Hispanic or Latino"]
+         }
+        }, {              
+          "name": "Measure Type",
+          "type": "string",
+          "dimension": true,
+          "constraints": {
+            "enum": ["Number"]
+         }
+        }, {
+          "name": "Variable",
+          "type": "string",
+          "dimension": true,
+          "constraints": {
+            "enum": ["Per Capita Income", "Margins of Error"]
+         }
+        }, {
+          "name": "Value",
+          "type": "number",
+          "dimension": false
+        }]
+      }
+    }
+  ],
+  "last_modified": "12/07/2017",
+  "ckan_extras": {
+    "full_description": {
+      "ckan_name": "Full Description",
+      "value": "The measure is derived by dividing the aggregate income of a population by the total population. The ACS rounds the aggregate for the numerator in this calculation to the nearest $100 and reports the result rounded to the nearest whole dollar. Beginning in 2000, individuals were presented with the option to select one or more races. In addition, the Census asked individuals to identify their race separately from identifying their Hispanic origin. The Census has published individual tables for the races and ethnicities provided as supplemental information to the main table that does not dissaggregate by race or ethnicity. Race categories include White, Black or African American, American Indian or Alaska Native, Asian, Native Hawaiian or Other Pacific Islander, Some other race, and Two or more races. We are not including specific combinations of two or more races as the counts of these combinations are small. Ethnic categories include Hispanic or Latino and White Non-Hispanic. This data originates from the American Community Survey, Tables B19301 and corresponding race- or ethnicity-specific derived tables (B19301A through B19301I).",
+      "type": "string"
+    },
+    "suppression": {
+      "ckan_name": "Suppression",
+      "value": "Supressed values in this dataset are the result of sample sizes too small for statistical analysis or significance.",
+      "type": "string"
+    },
+    "technical_notes": {
+      "ckan_name": "Technical Notes",
+      "value": "",
+      "type": "string"
+    },
+    "socrata": {
+      "ckan_name": "Socrata",
+      "value": "False",
+      "type": "string"
+    },
+    "socrata_url": {
+      "ckan_name": "Socrata Dataset URL",
+      "value": "",
+      "type": "string"
+    },
+    "socrata_dataset_name": {
+      "ckan_name": "Socrata Dataset Name",
+      "value": "",
+      "type": "string"
+    }, 
+    "domain": {
+      "ckan_name": "Domain",
+      "value": "Economy",
+      "type": "string"
+    },
+    "subdomain": {
+      "ckan_name": "Subdomain",
+      "value": "Income",
+      "type": "string"
+    },
+    "geography": {
+      "ckan_name": "Geography",
+      "value": "Town",
+      "type": "string",
+      "constraints": {"enum": ["Town", "County", "Town/County", "District", "Other"]}
+    },
+    "frequency": {
+      "ckan_name": "Frequency",
+      "value": "Annual",
+      "type": "string"
+    },
+    "years_in_catalog": {
+      "ckan_name": "Years in Catalog",
+      "value": ["2005-2009", "2006-2010", "2007-2011", "2008-2012", "2009-2013", "2010-2014", "2011-2015", "2012-2016"],
+      "type": "array"
+    },
+    "latest_year": {
+      "ckan_name": "Latest Year Available",
+      "value": "2012-2016",
+      "type": "string"
+    },
+    "disabled_views": {
+      "ckan_name": "Disabled Views",
+      "value": [],
+      "type": "array",
+      "constraints": {"enum": ["map", "table", "bar", "line"]}
+    },
+    "units": {
+      "ckan_name": "Units",
+      "value": {
+        "Number": "",
+        "Percent": "%"
+      }
+    },
+    "expected_number_of_geographies": {
+      "ckan_name": "Expected Number of Unique Geographies",
+      "value": 170,
+      "type": "string"
+    },     
+    "default": {      
+      "ckan_name": "Default",
+      "value": {
+        "Town": "Connecticut",
+        "Year": ["2012-2016"],
+        "Race/Ethnicity": "All",     
+        "Measure Type": "Number", 
+        "Variable": "Per Capita Income"
+      },
+      "type": "object"
+    } 
+  },
+  "spot_checks": [
+    {
+      "type": "$lookup",
+      "filter": {
+        "Town": "Connecticut",
+        "Year":	"2012-2016",
+        "Variable":	"Margins of Error",
+        "Measure Type":	"Number",
+        "Race/Ethnicity": "Hispanic or Latino"
+      },
+      "expected": {
+        "type": "$match",
+        "number type": "int",
+        "value": 340
+      } 
+    },    
+    {
+      "type": "$lookup",
+      "filter": {
+        "Town": "Andover",
+        "Year":	"2012-2016",
+        "Variable":	"Per Capita Income",
+        "Measure Type":	"Number",
+        "Race/Ethnicity": "Asian Alone"
+      },
+      "expected": {
+        "type": "$match",
+        "number type": "int",
+        "value": -9999
+      } 
+    }      
+  ],
+  "dimension_groups": [
+     {
+       "Race/Ethnicity": ["All",
+                     "American Indian and Alaska Native Alone",   
+                     "Asian Alone",                                
+                     "Black or African American Alone",           
+                     "Hispanic or Latino",                         
+                     "Native Hawaiian and Other Pacific Islander",
+                     "Some Other Race Alone",                      
+                     "Two or More Races",                        
+                     "White Alone",                                
+                     "White Alone Not Hispanic or Latino"],
+       "Measure Type": ["Number"], 
+       "Variable": ["Per Capita Income", "Margins of Error"]     
+     }
+  ]
+}
