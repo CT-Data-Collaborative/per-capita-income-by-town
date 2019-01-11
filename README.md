@@ -4,6 +4,8 @@ Per Capita Income by Town reports the 5-year estimated mean income for every ind
 
 Data Source: U.S. Census ACS 5-Year Estimates Table B19301
 
+Note: This dataset can be updated by simply updating the yearlist in `scripts/Per-Capita-Income-by-Town-processing.R`
+
 ## License MIT
 
 ## Getting Setup

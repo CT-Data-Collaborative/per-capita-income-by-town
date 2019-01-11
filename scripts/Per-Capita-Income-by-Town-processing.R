@@ -1,14 +1,16 @@
 library(dplyr)
 library(acs)
-library(datapkg)
 library(tidyr)
 source('./scripts/acsHelpers.R')
+source('./scripts/datapkg_read.R')
+source('./scripts/utils.R')
 
 ##################################################################
 #
 # Processing Script for Per Capita Income by Town
 # Created by Jenna Daly
 # On 11/27/2017
+# Updated on 01/11/2019
 #
 ##################################################################
 
@@ -20,7 +22,7 @@ x2016_files <- dir(path_to_raw_data, recursive=T, pattern = "ACS")
 
 #Get state data
 geography=geo.make(state=09)
-yearlist=c(2009:2016)
+yearlist=c(2009:2017)
 span = 5
 col.names="pretty" 
 key="ed0e58d2538fb239f51e01643745e83f380582d7"
@@ -174,10 +176,4 @@ pcap_income$Value[pcap_income$Value == -666666666] <- NA
 pcap_income$Value[pcap_income$Value == -222222222] <- NA
 
 
-write.table (
-  pcap_income,
-  file.path(getwd(), "data", "per_capita_income_town_2016.csv"),
-  sep = ",",
-  row.names = F,
-  na = "-9999"
-)
+WriteDFToTable(pcap_income,"per_capita_income_town_2016.csv")
