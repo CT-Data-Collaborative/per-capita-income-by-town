@@ -1,6 +1,6 @@
 library(acs)
 library(datapkg)
-source('./scripts/acsHelpers.R')
+source('/Desktop/github/prevention-portal/per-capita-income-by-town/scripts/acsHelpers.R')
 
 data <- acs.fetch(geography=geo.make(state=09, county="*", county.subdivision = "*"),
                   endyear=2015, span = 5, 
@@ -87,7 +87,7 @@ pops <- pops[pops$FIPS != "0900100000",]
 # Write to File
 write.table(
     pops,
-    file.path(getwd(), "raw", "populations.csv"),
+    file.path(getwd(),"raw", "populations_test.csv"),
     sep = ",",
     row.names = F
 )

@@ -4,7 +4,7 @@ library(devtools)
 load_all('../datapkg')
 library(datapkg)
 library(tidyr)
-source('./scripts/acsHelpers.R')
+source('Desktop/github/prevention-portal/per-capita-income-by-town/scripts/acsHelpers.R')
 
 ##################################################################
 #
@@ -16,13 +16,13 @@ source('./scripts/acsHelpers.R')
 
 #Setup environment
 sub_folders <- list.files()
-raw_location <- grep("raw", sub_folders, value=T)
+raw_location <- grep("Desktop", "github", "prevention-portal", "per-capita-income-by-town", "raw", sub_folders, value=T)
 path_to_raw_data <- (paste0(getwd(), "/", raw_location))
 x2016_files <- dir(path_to_raw_data, recursive=T, pattern = "ACS")
 
 #Get state data
 geography=geo.make(state=09)
-yearlist=c(2009:2019)
+yearlist=c(2009:2020)
 span = 5
 col.names="pretty" 
 key="ed0e58d2538fb239f51e01643745e83f380582d7"
@@ -178,8 +178,9 @@ pcap_income$Value[pcap_income$Value == -222222222] <- NA
 
 write.table (
   pcap_income,
-  file.path(getwd(), "data", "per_capita_income_town_2019.csv"),
+  file.path(getwd(), "data", "per_capita_income_town_2020.csv"),
   sep = ",",
   row.names = F,
   na = "-9999"
 )
+
